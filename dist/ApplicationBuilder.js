@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const lodash_1 = require("lodash");
 const Application_1 = require("./Application");
 const ApplicationContext_1 = require("./ApplicationContext");
-const lodash_1 = require("lodash");
-const isClass_1 = require("./isClass");
+const isClass_1 = require("./utils/isClass");
 class ApplicationBuilder {
     constructor(launcher) {
         this.context = this.createContext(launcher);

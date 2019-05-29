@@ -1,7 +1,7 @@
-import { Component } from './Component';
 import { Dependency, Element, Class, RequiredComponents } from './types';
-import { Context } from './Context';
-import { Launcher } from './Launcher';
+import { Context } from './abstract/Context';
+import { Launcher } from './abstract/Launcher';
+import { Component } from './abstract';
 
 export class ApplicationContext<T extends Dependency = Dependency> extends Context<Element<T>> {
 
@@ -22,7 +22,7 @@ export class ApplicationContext<T extends Dependency = Dependency> extends Conte
         );
     }
 
-    protected getComponents() {
+    protected getComponents(): any[] {
         return this.getIdentifiers().map(item => (this[item])).filter(component => this.isComponent(component));
     }
 

@@ -1,10 +1,10 @@
-import { Application } from './Application';
-import { ApplicationContext } from './ApplicationContext';
-import { Launcher } from './Launcher';
 import { camelCase } from 'lodash';
 
+import { Application } from './Application';
+import { ApplicationContext } from './ApplicationContext';
+import { Launcher } from './abstract/Launcher';
 import { Class } from './types';
-import { isClass } from './isClass';
+import { isClass } from './utils/isClass';
 
 export class ApplicationBuilder {
 

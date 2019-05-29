@@ -1,5 +1,5 @@
-import { Class, StringKey, LoadedContext } from './types';
-export declare class Context<T extends Object = Object> {
+import { Class, StringKey, LoadedContext } from '../types';
+export declare abstract class Context<T extends Object = Object> {
     protected identifiers: Set<string>;
     protected cache: Map<string, T>;
     add<P extends Object>(TClass: Class<T> | T, name: StringKey<P>, configurable?: boolean): this & P;
@@ -8,5 +8,5 @@ export declare class Context<T extends Object = Object> {
     clearCache(): void;
     load<T>(otherContext: LoadedContext<T>): this & LoadedContext<T>;
     protected getIdentifiers(): string[];
-    protected createGetter(T: Class<T> | T, name: string): () => T;
+    protected createGetter(component: Class<T> | T, name: string): () => T;
 }

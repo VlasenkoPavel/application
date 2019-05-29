@@ -1,5 +1,5 @@
-import { Component } from "./Component";
-import { Context } from "./Context";
+import { Context } from './abstract/Context';
+import { Component } from './abstract';
 export interface Class<T = any, P = any> extends Function {
     new (...args: P[]): T;
 }

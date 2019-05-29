@@ -1,4 +1,4 @@
-export class Component {
+export abstract class Component {
 
     public async init(dependencies?: Object): Promise<void> {}
 

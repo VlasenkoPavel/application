@@ -1,7 +1,7 @@
 import { Component } from './Component';
-import { ApplicationContext } from '.';
+import { ApplicationContext } from '..';
 
-export class Launcher extends Component {
+export abstract class Launcher extends Component {
 
     protected context: ApplicationContext;
 

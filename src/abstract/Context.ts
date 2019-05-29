@@ -1,7 +1,8 @@
-import { Class, StringKey, LoadedContext } from './types';
-import { isClass } from './isClass';
+import { Class, StringKey, LoadedContext } from '../types';
+import { isClass } from '../utils';
 
-export class Context<T extends Object = Object> {
+export abstract class Context<T extends Object = Object> {
+
     protected identifiers: Set<string> = new Set();
     protected cache: Map<string, T> = new Map();
 
@@ -24,12 +25,12 @@ export class Context<T extends Object = Object> {
         return extendedCtx;
     }
 
-    public loadToCache<T>(otherContext: Context<T>) {
+    public loadToCache<T>(otherContext: Context<T>): void {
         const identifiers = otherContext.getIdentifiers();
         identifiers.forEach(name => { this.cache.set(name, otherContext[name]) });
     }
 
-    public clearCache() {
+    public clearCache(): void {
         this.cache = new Map();
     }
 
@@ -44,16 +45,17 @@ export class Context<T extends Object = Object> {
         return [...this.identifiers];
     }
 
-    protected createGetter(T: Class<T> | T, name: string) {
+    protected createGetter(component: Class<T> | T, name: string): () => T {
         return () => {
             let instance = this.cache.get(name);
 
             if (!instance) {
-                instance = isClass(T) ? new T(this) : T;
+                instance = isClass(component) ? new component(this) : component;
                 this.cache.set(name, instance);
             }
 
             return instance;
         }
     }
+
 }

@@ -1,6 +1,6 @@
 import { Application } from './Application';
 import { ApplicationContext } from './ApplicationContext';
-import { Launcher } from './Launcher';
+import { Launcher } from './abstract/Launcher';
 import { Class } from './types';
 export declare class ApplicationBuilder {
     protected context: ApplicationContext;

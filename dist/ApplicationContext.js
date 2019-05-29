@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Component_1 = require("./Component");
-const Context_1 = require("./Context");
+const Context_1 = require("./abstract/Context");
+const abstract_1 = require("./abstract");
 class ApplicationContext extends Context_1.Context {
     constructor(launcher) {
         super();
@@ -17,7 +17,7 @@ class ApplicationContext extends Context_1.Context {
         return this.getIdentifiers().map(item => (this[item])).filter(component => this.isComponent(component));
     }
     isComponent(arg) {
-        return arg instanceof Component_1.Component;
+        return arg instanceof abstract_1.Component;
     }
 }
 exports.ApplicationContext = ApplicationContext;
