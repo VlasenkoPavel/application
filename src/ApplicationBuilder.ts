@@ -1,11 +1,7 @@
-import { camelCase } from 'lodash';
-
 import { Application } from './Application';
 import { ApplicationContext } from './ApplicationContext';
 import { Launcher } from './abstract/Launcher';
 import { Class } from './types';
-import { isClass } from './utils/isClass';
-import { getComponentName } from './utils/getComponentName';
 
 export class ApplicationBuilder {
 
@@ -16,8 +12,7 @@ export class ApplicationBuilder {
     }
 
     public buildComponent(component: Class | object, name?: string): ApplicationBuilder {
-        const aName: string = name || getComponentName(component);
-        this.context.add(component, aName);
+        this.context.add(component, name);
 
         return this;
     }

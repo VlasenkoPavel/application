@@ -7,10 +7,9 @@ class Context {
         this.identifiers = new Set();
         this.cache = new Map();
     }
-    add(component, name) {
-        const aName = name || getComponentName_1.getComponentName(component);
-        Object.defineProperty(this, aName, {
-            get: this.createGetter(component, aName),
+    add(component, name = getComponentName_1.getComponentName(component)) {
+        Object.defineProperty(this, name, {
+            get: this.createGetter(component, name),
             enumerable: true,
             configurable: true
         });

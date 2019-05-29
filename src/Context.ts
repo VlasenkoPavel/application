@@ -7,11 +7,12 @@ export class Context<T extends Object = Object> {
     protected identifiers: Set<string> = new Set();
     protected cache: Map<string, T> = new Map();
 
-    public add<P extends Object>(component: Class<T> | T, name?: StringKey<P>): this & P {
-        const aName: string = name || getComponentName(component);
-
-        Object.defineProperty(this, aName, {
-            get: this.createGetter(component, aName),
+    public add<P extends Object>(
+        component: Class<T> | T,
+        name: StringKey<P> = getComponentName(component) as StringKey<P>
+    ): this & P {
+        Object.defineProperty(this, name, {
+            get: this.createGetter(component, name),
             enumerable: true,
             configurable: true
         });
