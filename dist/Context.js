@@ -18,6 +18,18 @@ class Context {
         Object.assign(extendedCtx, obj);
         return extendedCtx;
     }
+    loadToCache(otherContext) {
+        const identifiers = otherContext.getIdentifiers();
+        identifiers.forEach(name => { this.cache.set(name, otherContext[name]); });
+    }
+    clearCache() {
+        this.cache = new Map();
+    }
+    load(otherContext) {
+        const identifiers = otherContext.getIdentifiers();
+        identifiers.forEach(name => { this[name] = otherContext[name]; });
+        return this;
+    }
     getIdentifiers() {
         return [...this.identifiers];
     }

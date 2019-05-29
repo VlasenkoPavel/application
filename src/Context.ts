@@ -1,4 +1,4 @@
-import { Class, StringKey } from './types';
+import { Class, StringKey, LoadedContext } from './types';
 
 export class Context<T extends Object = Object> {
     protected identifiers: Set<string> = new Set();
@@ -23,7 +23,23 @@ export class Context<T extends Object = Object> {
         return extendedCtx;
     }
 
-    public getIdentifiers(): string[] {
+    public loadToCache<T>(otherContext: Context<T>) {
+        const identifiers = otherContext.getIdentifiers();
+        identifiers.forEach(name => { this.cache.set(name, otherContext[name]) });
+    }
+
+    public clearCache() {
+        this.cache = new Map();
+    }
+
+    public load<T>(otherContext: LoadedContext<T>): this & LoadedContext<T>  {
+        const identifiers = otherContext.getIdentifiers();
+        identifiers.forEach(name => { this[name] = otherContext[name] });
+
+        return this
+    }
+
+    protected getIdentifiers(): string[] {
         return [...this.identifiers];
     }
 
