@@ -1,7 +1,7 @@
 import { Dependency, Element, Class } from './types';
 import { Context } from './Context';
 import { Launcher } from './abstract/Launcher';
-import { Component } from './abstract';
+import { Component } from './abstract/Component';
 export declare class ApplicationContext<T extends Dependency = Dependency> extends Context<Element<T>> {
     constructor(launcher: Class<Launcher>);
     init(): Promise<void>;

@@ -1,7 +1,7 @@
 import { Dependency, Element, Class, RequiredComponents } from './types';
 import { Context } from './Context';
 import { Launcher } from './abstract/Launcher';
-import { Component } from './abstract';
+import { Component } from './abstract/Component';
 
 export class ApplicationContext<T extends Dependency = Dependency> extends Context<Element<T>> {
 

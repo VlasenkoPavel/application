@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const utils_1 = require("./utils");
+const isClass_1 = require("./utils/isClass");
 class Context {
     constructor() {
         this.identifiers = new Set();
@@ -39,7 +39,7 @@ class Context {
         return () => {
             let instance = this.cache.get(name);
             if (!instance) {
-                instance = utils_1.isClass(component) ? new component(this) : component;
+                instance = isClass_1.isClass(component) ? new component(this) : component;
                 this.cache.set(name, instance);
             }
             return instance;

@@ -1,5 +1,5 @@
 import { Class, StringKey, LoadedContext } from './types';
-import { isClass } from './utils';
+import { isClass } from './utils/isClass';
 
 export class Context<T extends Object = Object> {
 
