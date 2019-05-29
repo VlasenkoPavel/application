@@ -1,5 +1,4 @@
-import { Component } from ".";
-export interface ILogger extends Component {
+export interface ILogger {
     debug(message: any, ...args: any[]): void;
     info(message: any, ...args: any[]): void;
     warn(message: any, ...args: any[]): void;

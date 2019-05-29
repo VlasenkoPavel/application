@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "node_modules/.bin/tsc"
+    "build": "node_modules/.bin/tsc",
+    "update": "rm -rf node_modules && rm -rf yarn.lock && yarn cache clean && yarn"
   },
   "dependencies": {
     "lodash": "^4.17.11"
