@@ -1,9 +1,10 @@
 import { Application } from './Application';
 import { ApplicationContext } from './ApplicationContext';
 import { Launcher } from './Launcher';
-import { Class } from './types';
 import { Component } from './Component';
 import { camelCase } from 'lodash';
+
+import { Class, Element } from './types';
 
 export class ApplicationBuilder {
 
@@ -13,13 +14,16 @@ export class ApplicationBuilder {
         this.context = this.createContext(launcher);
     }
 
-    public buildComponent(component: Class<Component>, name: string = camelCase(component.name)): ApplicationBuilder {
+    public buildComponent(component: Class, name: string = camelCase(component.name)): ApplicationBuilder {
         this.context.add(component, name);
 
         return this;
     }
 
-    public addComponent(component: Component, name: string = camelCase(component.constructor.name)): ApplicationBuilder {
+    public addComponent(
+        component: Component | object,
+        name: string = camelCase(component.constructor.name)
+    ): ApplicationBuilder {
         this.context.add(component, name);
 
         return this;
