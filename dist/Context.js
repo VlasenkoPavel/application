@@ -1,16 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const isClass_1 = require("./utils/isClass");
+const getComponentName_1 = require("./utils/getComponentName");
 class Context {
     constructor() {
         this.identifiers = new Set();
         this.cache = new Map();
     }
-    add(TClass, name, configurable = true) {
-        Object.defineProperty(this, name, {
-            get: this.createGetter(TClass, name),
+    add(component, name) {
+        const aName = name || getComponentName_1.getComponentName(component);
+        Object.defineProperty(this, aName, {
+            get: this.createGetter(component, aName),
             enumerable: true,
-            configurable
+            configurable: true
         });
         this.identifiers.add(name);
         return this;
