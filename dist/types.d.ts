@@ -9,3 +9,6 @@ export declare type Element<T extends Dependency = Dependency> = Component | (Cl
 export declare type LoadedContext<T> = Context & {
     [key: string]: any;
 };
+export declare const enum RequiredComponents {
+    launcher = "launcher"
+}

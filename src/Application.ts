@@ -1,4 +1,5 @@
 import { ApplicationContext } from './ApplicationContext';
+import { RequiredComponents } from './types';
 
 export class Application {
 
@@ -8,7 +9,12 @@ export class Application {
         this.context = context;
     }
 
-    public async start(): Promise<void> {
+    public async init(): Promise<void> {
         await this.context.init();
     }
+
+    public start(): void {
+        this.context[RequiredComponents.launcher].start();
+    }
+
 }

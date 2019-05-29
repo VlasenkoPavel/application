@@ -4,8 +4,11 @@ class Application {
     constructor(context) {
         this.context = context;
     }
-    async start() {
+    async init() {
         await this.context.init();
+    }
+    start() {
+        this.context["launcher" /* launcher */].start();
     }
 }
 exports.Application = Application;
