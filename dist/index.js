@@ -8,6 +8,5 @@ __export(require("./ApplicationBuilder"));
 __export(require("./ApplicationContext"));
 __export(require("./abstract"));
 __export(require("./Context"));
-__export(require("./abstract/Launcher"));
 __export(require("./types"));
 __export(require("./utils"));
