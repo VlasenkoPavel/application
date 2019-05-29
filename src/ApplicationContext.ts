@@ -1,17 +1,26 @@
 import { Component } from './Component';
-import { Class } from './types';
+import { Dependency, Element } from './types';
 import { Context } from './Context';
 
-export class ApplicationContext extends Context<Component> {
+export class ApplicationContext<T extends Dependency = Dependency> extends Context<Element<T>> {
+
     public async init(): Promise<void> {
         await Promise.all(
-            this.getIdentifiers().map(item => (this[item] as Component).init(this))
+            this.getComponents().map(component => component.init())
         );
     }
 
     public async dispose(): Promise<void> {
         await Promise.all(
-            this.getIdentifiers().map(item => (this[item] as Component).dispose())
+            this.getComponents().map(component => component.dispose())
         );
+    }
+
+    protected getComponents() {
+        return this.getIdentifiers().map(item => (this[item])).filter(component => this.isComponent(component));
+    }
+
+    protected isComponent(arg: Element<T>): arg is Component {
+        return arg instanceof Component;
     }
 }
