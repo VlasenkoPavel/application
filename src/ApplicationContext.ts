@@ -1,5 +1,5 @@
 import { Dependency, Element, Class, RequiredComponents } from './types';
-import { Context } from './abstract/Context';
+import { Context } from './Context';
 import { Launcher } from './abstract/Launcher';
 import { Component } from './abstract';
 

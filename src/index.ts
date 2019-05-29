@@ -2,6 +2,7 @@ export * from './Application';
 export * from './ApplicationBuilder';
 export * from './ApplicationContext';
 export * from './abstract';
+export * from './Context';
 export * from './abstract/Launcher';
 export * from './interfaces/ILogger';
 export * from './types';

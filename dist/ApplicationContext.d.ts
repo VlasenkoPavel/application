@@ -1,5 +1,5 @@
 import { Dependency, Element, Class } from './types';
-import { Context } from './abstract/Context';
+import { Context } from './Context';
 import { Launcher } from './abstract/Launcher';
 import { Component } from './abstract';
 export declare class ApplicationContext<T extends Dependency = Dependency> extends Context<Element<T>> {

@@ -1,7 +1,7 @@
-import { Class, StringKey, LoadedContext } from '../types';
-import { isClass } from '../utils';
+import { Class, StringKey, LoadedContext } from './types';
+import { isClass } from './utils';
 
-export abstract class Context<T extends Object = Object> {
+export class Context<T extends Object = Object> {
 
     protected identifiers: Set<string> = new Set();
     protected cache: Map<string, T> = new Map();

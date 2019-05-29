@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Context_1 = require("./abstract/Context");
+const Context_1 = require("./Context");
 const abstract_1 = require("./abstract");
 class ApplicationContext extends Context_1.Context {
     constructor(launcher) {

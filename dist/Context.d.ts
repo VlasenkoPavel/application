@@ -1,5 +1,5 @@
-import { Class, StringKey, LoadedContext } from '../types';
-export declare abstract class Context<T extends Object = Object> {
+import { Class, StringKey, LoadedContext } from './types';
+export declare class Context<T extends Object = Object> {
     protected identifiers: Set<string>;
     protected cache: Map<string, T>;
     add<P extends Object>(TClass: Class<T> | T, name: StringKey<P>, configurable?: boolean): this & P;
