@@ -8,13 +8,7 @@ export class Application {
         this.context = context;
     }
 
-    public async init(): Promise<void> {
+    public async start(): Promise<void> {
         await this.context.init();
     }
-
-    public start(): void {
-        const { launcher } = this.context;
-        launcher.start();
-    }
-
 }

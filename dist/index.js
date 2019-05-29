@@ -7,7 +7,4 @@ __export(require("./Application"));
 __export(require("./ApplicationBuilder"));
 __export(require("./ApplicationContext"));
 __export(require("./Component"));
-__export(require("./ConfigFactory"));
-__export(require("./Connector"));
 __export(require("./Launcher"));
-__export(require("./Logger"));

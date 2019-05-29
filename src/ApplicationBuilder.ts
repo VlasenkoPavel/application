@@ -1,9 +1,11 @@
 import { Application } from './Application';
 import { ApplicationContext } from './ApplicationContext';
-import { ConfigFactory } from './ConfigFactory';
-import { Connector } from './Connector';
-import { Logger } from './Logger';
 import { Launcher } from './Launcher';
+import { Class } from './types';
+import { Component } from './Component';
+import { camelCase } from 'lodash';
+import { IConfigFactory } from './IConfigFactory';
+import { ILogger } from './ILogger';
 
 export class ApplicationBuilder {
 
@@ -13,23 +15,28 @@ export class ApplicationBuilder {
         this.context = this.createContext();
     }
 
-    public buildConfigs(configFactory: ConfigFactory): ApplicationBuilder {
-        this.context.configFactory = configFactory;
+    public buildConfigs(configFactory: Class<IConfigFactory>): ApplicationBuilder {
+        const factory = new configFactory(this.context);
+        this.context.add(factory.create(), 'config');
+
         return this;
     }
 
-    public buildConnector(connector: Connector): ApplicationBuilder {
-        this.context.connector = connector;
+    public buildComponent(component: Class<Component>, name: string = camelCase(component.name)): ApplicationBuilder {
+        this.context.add(component, name);
+
         return this;
     }
 
-    public buildLogger(logger: Logger): ApplicationBuilder {
-        this.context.logger = logger;
+    public buildLogger(logger: Class<ILogger>): ApplicationBuilder {
+        this.context.add(logger, 'logger');
+
         return this;
     }
 
-    public buildLauncher(launcher: Launcher): ApplicationBuilder {
-        this.context.launcher = launcher;
+    public buildLauncher(launcher: Class<Launcher>): ApplicationBuilder {
+        this.context.add(launcher, 'launcher');
+
         return this;
     }
 
@@ -38,7 +45,7 @@ export class ApplicationBuilder {
     }
 
     protected createContext(): ApplicationContext {
-        return new ApplicationContext();
+        return new ApplicationContext()
     }
 
 }

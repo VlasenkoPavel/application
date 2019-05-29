@@ -2,24 +2,26 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Application_1 = require("./Application");
 const ApplicationContext_1 = require("./ApplicationContext");
+const lodash_1 = require("lodash");
 class ApplicationBuilder {
     constructor() {
         this.context = this.createContext();
     }
     buildConfigs(configFactory) {
-        this.context.configFactory = configFactory;
+        const factory = new configFactory(this.context);
+        this.context.add(factory.create(), 'config');
         return this;
     }
-    buildConnector(connector) {
-        this.context.connector = connector;
+    buildComponent(component, name = lodash_1.camelCase(component.name)) {
+        this.context.add(component, name);
         return this;
     }
     buildLogger(logger) {
-        this.context.logger = logger;
+        this.context.add(logger, 'logger');
         return this;
     }
     buildLauncher(launcher) {
-        this.context.launcher = launcher;
+        this.context.add(launcher, 'launcher');
         return this;
     }
     create() {
