@@ -16,6 +16,10 @@ class ApplicationBuilder {
         this.context.add(component, name);
         return this;
     }
+    addComponent(component, name = lodash_1.camelCase(component.constructor.name)) {
+        this.context.add(component, name);
+        return this;
+    }
     buildLogger(logger) {
         this.context.add(logger, 'logger');
         return this;

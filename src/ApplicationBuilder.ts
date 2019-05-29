@@ -28,6 +28,12 @@ export class ApplicationBuilder {
         return this;
     }
 
+    public addComponent(component: Component, name: string = camelCase(component.constructor.name)): ApplicationBuilder {
+        this.context.add(component, name);
+
+        return this;
+    }
+
     public buildLogger(logger: Class<ILogger>): ApplicationBuilder {
         this.context.add(logger, 'logger');
 
