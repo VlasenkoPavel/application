@@ -1,30 +1,24 @@
 import { Application } from './Application';
 import { ApplicationContext } from './ApplicationContext';
 import { Launcher } from './Launcher';
-import { Component } from './Component';
 import { camelCase } from 'lodash';
 
-import { Class, Element } from './types';
+import { Class } from './types';
+import { isClass } from './isClass';
 
 export class ApplicationBuilder {
 
     protected context: ApplicationContext;
 
-    constructor(launcher: Class<Launcher> | Launcher) {
+    constructor(launcher: Class<Launcher>) {
         this.context = this.createContext(launcher);
     }
 
-    public buildComponent(component: Class, name: string = camelCase(component.name)): ApplicationBuilder {
-        this.context.add(component, name);
+    public buildComponent(component: Class | object, name?: string): ApplicationBuilder {
+        let aName: string = name
+            || (isClass(component) ? camelCase(component.name) : camelCase(component.constructor.name))
 
-        return this;
-    }
-
-    public addComponent(
-        component: Component | object,
-        name: string = camelCase(component.constructor.name)
-    ): ApplicationBuilder {
-        this.context.add(component, name);
+        this.context.add(component, aName);
 
         return this;
     }
@@ -33,7 +27,7 @@ export class ApplicationBuilder {
         return new Application(this.context);
     }
 
-    protected createContext(launcher: Class<Launcher> | Launcher): ApplicationContext {
+    protected createContext(launcher: Class<Launcher>): ApplicationContext {
         return new ApplicationContext(launcher)
     }
 

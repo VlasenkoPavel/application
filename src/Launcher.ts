@@ -5,6 +5,11 @@ export class Launcher extends Component {
 
     protected context: ApplicationContext;
 
+    constructor(context: ApplicationContext) {
+        super();
+        this.context = context;
+    }
+
     public setContext(context: ApplicationContext): void {
         this.context = context;
     }

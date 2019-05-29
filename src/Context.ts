@@ -1,8 +1,9 @@
 import { Class, StringKey, LoadedContext } from './types';
+import { isClass } from './isClass';
 
 export class Context<T extends Object = Object> {
     protected identifiers: Set<string> = new Set();
-    protected cache: Map<string, T>;
+    protected cache: Map<string, T> = new Map();
 
     public add<P extends Object>(TClass: Class<T> | T, name: StringKey<P> , configurable = true): this & P {
         Object.defineProperty(this, name, {
@@ -48,15 +49,11 @@ export class Context<T extends Object = Object> {
             let instance = this.cache.get(name);
 
             if (!instance) {
-                instance = this.isClass(T) ? new T(this) : T;
+                instance = isClass(T) ? new T(this) : T;
                 this.cache.set(name, instance);
             }
 
             return instance;
         }
-    }
-
-    protected isClass(T: Class<T> | Object): T is Class<T>  {
-        return T instanceof Function;
     }
 }

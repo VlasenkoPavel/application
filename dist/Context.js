@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const isClass_1 = require("./isClass");
 class Context {
     constructor() {
         this.identifiers = new Set();
+        this.cache = new Map();
     }
     add(TClass, name, configurable = true) {
         Object.defineProperty(this, name, {
@@ -37,14 +39,11 @@ class Context {
         return () => {
             let instance = this.cache.get(name);
             if (!instance) {
-                instance = this.isClass(T) ? new T(this) : T;
+                instance = isClass_1.isClass(T) ? new T(this) : T;
                 this.cache.set(name, instance);
             }
             return instance;
         };
-    }
-    isClass(T) {
-        return T instanceof Function;
     }
 }
 exports.Context = Context;

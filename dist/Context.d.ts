@@ -9,5 +9,4 @@ export declare class Context<T extends Object = Object> {
     load<T>(otherContext: LoadedContext<T>): this & LoadedContext<T>;
     protected getIdentifiers(): string[];
     protected createGetter(T: Class<T> | T, name: string): () => T;
-    protected isClass(T: Class<T> | Object): T is Class<T>;
 }
