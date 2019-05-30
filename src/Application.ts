@@ -28,7 +28,7 @@ export class Application {
     }
 
     public async stop(): Promise<void> {
-        await this.launcher.stop();
+        await this.context.dispose();
     }
 
 }

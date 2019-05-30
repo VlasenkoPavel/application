@@ -14,7 +14,7 @@ class Application {
         await this.launcher.start();
     }
     async stop() {
-        await this.launcher.stop();
+        await this.context.dispose();
     }
 }
 exports.Application = Application;
