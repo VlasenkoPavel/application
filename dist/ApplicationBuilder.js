@@ -23,7 +23,7 @@ class ApplicationBuilder {
         return app;
     }
     createContext(launcher) {
-        return new ApplicationContext_1.ApplicationContext();
+        return new ApplicationContext_1.ApplicationContext(launcher);
     }
     createCommands() {
         return this.commands.map(command => new command(this.context));

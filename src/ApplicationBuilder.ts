@@ -27,7 +27,6 @@ export class ApplicationBuilder {
     }
 
     public create(): Application {
-
         if (!isEmpty(this.commands)) {
             this.context.add(this.createCommands(), RequiredComponents.commands);
         }
@@ -38,7 +37,7 @@ export class ApplicationBuilder {
     }
 
     protected createContext(launcher: Class<Launcher>): ApplicationContext {
-        return new ApplicationContext();
+        return new ApplicationContext(launcher);
     }
 
     protected createCommands(): ICommand[] {
