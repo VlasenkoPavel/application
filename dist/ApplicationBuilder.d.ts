@@ -5,9 +5,11 @@ import { Class } from './types';
 import { ICommand } from './interfaces';
 export declare class ApplicationBuilder {
     protected context: ApplicationContext;
+    protected commands: Class<ICommand>[];
     constructor(launcher: Class<Launcher>);
     buildComponent(component: Class | object, name?: string): ApplicationBuilder;
-    buildCommands(classes: Class<ICommand>[]): void;
+    buildCommands(commands: Class<ICommand>[]): void;
     create(): Application;
     protected createContext(launcher: Class<Launcher>): ApplicationContext;
+    protected createCommands(): ICommand[];
 }
