@@ -13,8 +13,8 @@ export class Application {
         await this.context.init();
     }
 
-    public start(): void {
-        this.context[RequiredComponents.launcher].start();
+    public async start(): Promise<void> {
+        await this.context[RequiredComponents.launcher].start();
     }
 
 }

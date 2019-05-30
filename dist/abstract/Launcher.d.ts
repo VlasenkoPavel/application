@@ -6,7 +6,6 @@ export interface LauncherDependencies {
 export declare abstract class Launcher extends Component {
     protected context: ApplicationContext;
     constructor({ context }: LauncherDependencies);
-    setContext(context: ApplicationContext): void;
-    start(): void;
+    abstract start(): void | Promise<void>;
     protected onExit(): void;
 }

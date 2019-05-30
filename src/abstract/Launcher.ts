@@ -14,13 +14,7 @@ export abstract class Launcher extends Component {
         this.context = context;
     }
 
-    public setContext(context: ApplicationContext): void {
-        this.context = context;
-    }
-
-    public start(): void {
-        throw new Error(`${this.constructor.name}.start is undefined`);
-    }
+    public abstract start(): void | Promise<void>;
 
     protected onExit(): void {
         this.context.dispose();

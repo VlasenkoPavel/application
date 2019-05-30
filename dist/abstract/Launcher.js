@@ -6,12 +6,6 @@ class Launcher extends Component_1.Component {
         super();
         this.context = context;
     }
-    setContext(context) {
-        this.context = context;
-    }
-    start() {
-        throw new Error(`${this.constructor.name}.start is undefined`);
-    }
     onExit() {
         this.context.dispose();
     }
