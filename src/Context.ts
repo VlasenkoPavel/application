@@ -3,7 +3,7 @@ import { isClass } from './utils/isClass';
 import { getComponentName } from './utils/getComponentName';
 
 export class Context<T extends Object = Object> {
-
+    public readonly context = this;
     protected identifiers: Set<string> = new Set();
     protected cache: Map<string, T> = new Map();
 
@@ -31,7 +31,7 @@ export class Context<T extends Object = Object> {
 
     public loadToCache<T>(otherContext: Context<T>): void {
         const identifiers = otherContext.getIdentifiers();
-        identifiers.forEach(name => { this.cache.set(name, otherContext[name]) });
+        identifiers.forEach(name => this.cache.set(name, otherContext[name]));
     }
 
     public clearCache(): void {
@@ -40,9 +40,9 @@ export class Context<T extends Object = Object> {
 
     public load<T>(otherContext: LoadedContext<T>): this & LoadedContext<T>  {
         const identifiers = otherContext.getIdentifiers();
-        identifiers.forEach(name => { this[name] = otherContext[name] });
+        identifiers.forEach(name => this[name] = otherContext[name]);
 
-        return this
+        return this;
     }
 
     protected getIdentifiers(): string[] {
@@ -59,7 +59,7 @@ export class Context<T extends Object = Object> {
             }
 
             return instance;
-        }
+        };
     }
 
 }

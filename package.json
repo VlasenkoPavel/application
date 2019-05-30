@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "node_modules/.bin/tsc",
+    "build": "./node_modules/.bin/tslint --force 'src/**/*.ts' && ./node_modules/.bin/tsc --project tsconfig.json",
     "update": "rm -rf node_modules && rm -rf yarn.lock && yarn cache clean && yarn"
   },
   "dependencies": {
@@ -13,6 +13,8 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.130",
+    "tslint": "^5.16.0",
+    "tslint-config-airbnb": "^5.11.1",
     "typescript": "^3.4.5"
   }
 }

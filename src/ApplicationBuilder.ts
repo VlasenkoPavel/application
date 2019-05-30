@@ -7,7 +7,7 @@ export class ApplicationBuilder {
 
     protected context: ApplicationContext;
 
-    constructor(launcher: Class<Launcher> | Launcher) {
+    constructor(launcher: Class<Launcher>) {
         this.context = this.createContext(launcher);
     }
 
@@ -21,8 +21,8 @@ export class ApplicationBuilder {
         return new Application(this.context);
     }
 
-    protected createContext(launcher: Class<Launcher> | Launcher): ApplicationContext {
-        return new ApplicationContext(launcher)
+    protected createContext(launcher: Class<Launcher>): ApplicationContext {
+        return new ApplicationContext(launcher);
     }
 
 }

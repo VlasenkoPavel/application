@@ -4,6 +4,5 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./createInjectDecorator"));
-__export(require("./createTypedInjectDecorator"));
 __export(require("./getComponentName"));
 __export(require("./isClass"));

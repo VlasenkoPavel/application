@@ -1,5 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createInjectDecorator = (ctx) => (target, key) => {
+exports.createTypedInjectDecorator = (ctx) => (target, key) => {
     target[key] = ctx[key];
 };

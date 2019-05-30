@@ -4,6 +4,7 @@ const isClass_1 = require("./utils/isClass");
 const getComponentName_1 = require("./utils/getComponentName");
 class Context {
     constructor() {
+        this.context = this;
         this.identifiers = new Set();
         this.cache = new Map();
     }
@@ -23,14 +24,14 @@ class Context {
     }
     loadToCache(otherContext) {
         const identifiers = otherContext.getIdentifiers();
-        identifiers.forEach(name => { this.cache.set(name, otherContext[name]); });
+        identifiers.forEach(name => this.cache.set(name, otherContext[name]));
     }
     clearCache() {
         this.cache = new Map();
     }
     load(otherContext) {
         const identifiers = otherContext.getIdentifiers();
-        identifiers.forEach(name => { this[name] = otherContext[name]; });
+        identifiers.forEach(name => this[name] = otherContext[name]);
         return this;
     }
     getIdentifiers() {

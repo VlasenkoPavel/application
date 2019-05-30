@@ -11,7 +11,7 @@ export type Dependency = Function | object;
 
 export type Element<T extends Dependency = Dependency> = Component | Class<Component> | T;
 
-export type LoadedContext<T> = Context & { [key: string]: any }
+export type LoadedContext<T> = Context & { [key: string]: any };
 
 export const enum RequiredComponents {
     launcher = 'launcher'
