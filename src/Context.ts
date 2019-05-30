@@ -6,10 +6,6 @@ export class Context {
     protected identifiers: Set<string> = new Set();
     protected cache: Map<string, any> = new Map();
 
-    public get context() {
-        return this;
-    }
-
     public add<P extends Object, T extends Object>(
         component: Class<T> | T,
         name: StringKey<P> = getComponentName(component) as StringKey<P>

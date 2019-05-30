@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Application {
-    constructor({ context, launcher }) {
-        this.context = context;
+    constructor({ launcher }) {
         this.launcher = launcher;
+    }
+    setContext(context) {
+        this.context = context;
     }
     async init() {
         await this.context.init();

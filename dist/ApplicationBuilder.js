@@ -11,7 +11,9 @@ class ApplicationBuilder {
         return this;
     }
     create() {
-        return new Application_1.Application(this);
+        const app = new Application_1.Application(this);
+        app.setContext(this.context);
+        return app;
     }
     createContext(launcher) {
         return new ApplicationContext_1.ApplicationContext(launcher);

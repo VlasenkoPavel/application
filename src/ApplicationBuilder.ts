@@ -18,7 +18,10 @@ export class ApplicationBuilder {
     }
 
     public create(): Application {
-        return new Application(this as any);
+        const app = new Application(this as any);
+        app.setContext(this.context);
+
+        return app;
     }
 
     protected createContext(launcher: Class<Launcher>): ApplicationContext {

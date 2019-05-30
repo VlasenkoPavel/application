@@ -11,9 +11,12 @@ export class Application {
     protected context: ApplicationContext;
     protected launcher: Launcher;
 
-    constructor({ context, launcher }: Dependencies) {
-        this.context = context;
+    constructor({ launcher }: Dependencies) {
         this.launcher = launcher;
+    }
+
+    public setContext(context: ApplicationContext) {
+        this.context = context;
     }
 
     public async init(): Promise<void> {
