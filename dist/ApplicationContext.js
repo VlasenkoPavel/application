@@ -5,7 +5,7 @@ const Component_1 = require("./abstract/Component");
 class ApplicationContext extends Context_1.Context {
     constructor(launcher) {
         super();
-        this.add(new launcher(this), "launcher" /* launcher */);
+        this.add(launcher, "launcher" /* launcher */);
     }
     async init() {
         await Promise.all(this.getComponents().map(component => component.init()));

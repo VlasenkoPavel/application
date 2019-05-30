@@ -5,9 +5,9 @@ import { Component } from './abstract/Component';
 
 export class ApplicationContext<T extends Dependency = Dependency> extends Context<Element<T>> {
 
-    constructor(launcher: Class<Launcher>) {
+    constructor(launcher: Class<Launcher> | Launcher) {
         super();
-        this.add(new launcher(this), RequiredComponents.launcher);
+        this.add(launcher, RequiredComponents.launcher);
     }
 
     public async init(): Promise<void> {
