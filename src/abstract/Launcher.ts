@@ -22,4 +22,8 @@ export abstract class Launcher extends Component {
         throw new Error(`${this.constructor.name}.start is undefined`);
     }
 
+    protected onExit(): void {
+        this.context.dispose();
+    }
+
 }

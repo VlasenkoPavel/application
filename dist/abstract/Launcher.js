@@ -12,5 +12,8 @@ class Launcher extends Component_1.Component {
     start() {
         throw new Error(`${this.constructor.name}.start is undefined`);
     }
+    onExit() {
+        this.context.dispose();
+    }
 }
 exports.Launcher = Launcher;
