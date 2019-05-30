@@ -4,10 +4,11 @@ const isClass_1 = require("./utils/isClass");
 const getComponentName_1 = require("./utils/getComponentName");
 class Context {
     constructor() {
-        this.context = this;
         this.identifiers = new Set();
         this.cache = new Map();
-        this.add(this, 'context');
+    }
+    get context() {
+        return this;
     }
     add(component, name = getComponentName_1.getComponentName(component)) {
         Object.defineProperty(this, name, {

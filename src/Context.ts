@@ -3,12 +3,11 @@ import { isClass } from './utils/isClass';
 import { getComponentName } from './utils/getComponentName';
 
 export class Context {
-    public readonly context = this;
     protected identifiers: Set<string> = new Set();
     protected cache: Map<string, any> = new Map();
 
-    constructor() {
-        this.add(this, 'context');
+    public get context() {
+        return this;
     }
 
     public add<P extends Object, T extends Object>(
