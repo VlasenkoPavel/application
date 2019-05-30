@@ -12,6 +12,7 @@ class Application {
     }
     async start() {
         await this.launcher.start();
+        process.on('exit', () => this.stop());
     }
     async stop() {
         await this.context.dispose();

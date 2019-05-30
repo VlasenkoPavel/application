@@ -10,5 +10,6 @@ export declare type LoadedContext<T> = Context & {
     [key: string]: any;
 };
 export declare const enum RequiredComponents {
-    launcher = "launcher"
+    launcher = "launcher",
+    commands = "commands"
 }

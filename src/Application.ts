@@ -25,6 +25,7 @@ export class Application {
 
     public async start(): Promise<void> {
         await this.launcher.start();
+        process.on('exit', () => this.stop());
     }
 
     public async stop(): Promise<void> {

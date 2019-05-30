@@ -14,5 +14,6 @@ export type Element<T extends Dependency = Dependency> = Component | Class<Compo
 export type LoadedContext<T> = Context & { [key: string]: any };
 
 export const enum RequiredComponents {
-    launcher = 'launcher'
+    launcher = 'launcher',
+    commands = 'commands'
 }

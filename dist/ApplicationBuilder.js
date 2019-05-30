@@ -10,6 +10,9 @@ class ApplicationBuilder {
         this.context.add(component, name);
         return this;
     }
+    buildCommands(classes) {
+        this.context.add(classes.map(item => new item(this)), "commands" /* commands */);
+    }
     create() {
         const app = new Application_1.Application(this);
         app.setContext(this.context);

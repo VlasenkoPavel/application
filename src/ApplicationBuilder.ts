@@ -1,7 +1,8 @@
 import { Application } from './Application';
 import { ApplicationContext } from './ApplicationContext';
 import { Launcher } from './abstract/Launcher';
-import { Class } from './types';
+import { Class, RequiredComponents } from './types';
+import { ICommand } from './interfaces';
 
 export class ApplicationBuilder {
 
@@ -15,6 +16,10 @@ export class ApplicationBuilder {
         this.context.add(component, name);
 
         return this;
+    }
+
+    public buildCommands(classes: Class<ICommand>[]) {
+        this.context.add(classes.map(item => new item(this)), RequiredComponents.commands);
     }
 
     public create(): Application {
