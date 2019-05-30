@@ -2,12 +2,16 @@ import { Class, StringKey, LoadedContext } from './types';
 import { isClass } from './utils/isClass';
 import { getComponentName } from './utils/getComponentName';
 
-export class Context<T extends Object = Object> {
+export class Context {
     public readonly context = this;
     protected identifiers: Set<string> = new Set();
-    protected cache: Map<string, T> = new Map();
+    protected cache: Map<string, any> = new Map();
 
-    public add<P extends Object>(
+    constructor() {
+        this.add(this, 'context');
+    }
+
+    public add<P extends Object, T extends Object>(
         component: Class<T> | T,
         name: StringKey<P> = getComponentName(component) as StringKey<P>
     ): this & P {
@@ -29,7 +33,7 @@ export class Context<T extends Object = Object> {
         return extendedCtx;
     }
 
-    public loadToCache<T>(otherContext: Context<T>): void {
+    public loadToCache<T>(otherContext: Context): void {
         const identifiers = otherContext.getIdentifiers();
         identifiers.forEach(name => this.cache.set(name, otherContext[name]));
     }
@@ -49,7 +53,7 @@ export class Context<T extends Object = Object> {
         return [...this.identifiers];
     }
 
-    protected createGetter(component: Class<T> | T, name: string): () => T {
+    protected createGetter<T>(component: Class<T> | T, name: string): () => T {
         return () => {
             let instance = this.cache.get(name);
 

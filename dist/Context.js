@@ -7,6 +7,7 @@ class Context {
         this.context = this;
         this.identifiers = new Set();
         this.cache = new Map();
+        this.add(this, 'context');
     }
     add(component, name = getComponentName_1.getComponentName(component)) {
         Object.defineProperty(this, name, {
