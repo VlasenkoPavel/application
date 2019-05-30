@@ -17,7 +17,6 @@ class ApplicationBuilder {
     }
     create() {
         const app = new Application_1.Application(this.context);
-        app.setContext(this.context);
         if (!lodash_1.isEmpty(this.commands)) {
             this.context.add(this.createCommands(), "commands" /* commands */);
         }

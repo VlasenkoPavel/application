@@ -28,7 +28,6 @@ export class ApplicationBuilder {
 
     public create(): Application {
         const app = new Application(this.context as any);
-        app.setContext(this.context);
 
         if (!isEmpty(this.commands)) {
             this.context.add(this.createCommands(), RequiredComponents.commands);

@@ -7,8 +7,7 @@ interface Dependencies {
 export declare class Application {
     protected context: ApplicationContext;
     protected launcher: Launcher;
-    constructor({ launcher }: Dependencies);
-    setContext(context: ApplicationContext): void;
+    constructor({ context, launcher }: Dependencies);
     init(): Promise<void>;
     start(): Promise<void>;
     stop(): Promise<void>;
