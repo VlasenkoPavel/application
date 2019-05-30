@@ -3,10 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Context_1 = require("./Context");
 const Component_1 = require("./abstract/Component");
 class ApplicationContext extends Context_1.Context {
-    constructor(launcher) {
-        super();
-        this.add(launcher, "launcher" /* launcher */);
-    }
     async init() {
         await Promise.all(this.getComponents().map(component => component.init()));
     }

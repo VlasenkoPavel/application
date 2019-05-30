@@ -16,14 +16,14 @@ class ApplicationBuilder {
         return this;
     }
     create() {
-        const app = new Application_1.Application(this.context);
         if (!lodash_1.isEmpty(this.commands)) {
             this.context.add(this.createCommands(), "commands" /* commands */);
         }
+        const app = new Application_1.Application(this.context);
         return app;
     }
     createContext(launcher) {
-        return new ApplicationContext_1.ApplicationContext(launcher);
+        return new ApplicationContext_1.ApplicationContext();
     }
     createCommands() {
         return this.commands.map(command => new command(this.context));

@@ -1,14 +1,8 @@
 import { Dependency, Element, Class, RequiredComponents } from './types';
 import { Context } from './Context';
-import { Launcher } from './abstract/Launcher';
 import { Component } from './abstract/Component';
 
 export class ApplicationContext<T extends Dependency = Dependency> extends Context {
-
-    constructor(launcher: Class<Launcher> | Launcher) {
-        super();
-        this.add(launcher, RequiredComponents.launcher);
-    }
 
     public async init(): Promise<void> {
         await Promise.all(

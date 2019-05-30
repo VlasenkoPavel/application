@@ -27,17 +27,18 @@ export class ApplicationBuilder {
     }
 
     public create(): Application {
-        const app = new Application(this.context as any);
 
         if (!isEmpty(this.commands)) {
             this.context.add(this.createCommands(), RequiredComponents.commands);
         }
 
+        const app = new Application(this.context as any);
+
         return app;
     }
 
     protected createContext(launcher: Class<Launcher>): ApplicationContext {
-        return new ApplicationContext(launcher);
+        return new ApplicationContext();
     }
 
     protected createCommands(): ICommand[] {
