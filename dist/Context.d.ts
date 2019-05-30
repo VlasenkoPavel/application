@@ -2,6 +2,7 @@ import { Class, StringKey, LoadedContext } from './types';
 export declare class Context {
     protected identifiers: Set<string>;
     protected cache: Map<string, any>;
+    readonly context: this;
     add<P extends Object, T extends Object>(component: Class<T> | T, name?: StringKey<P>): this & P;
     with<T extends Object>(obj: T): this & T;
     loadToCache<T>(otherContext: Context): void;

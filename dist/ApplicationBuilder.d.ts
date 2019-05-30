@@ -8,7 +8,7 @@ export declare class ApplicationBuilder {
     protected commands: Class<ICommand>[];
     constructor(launcher: Class<Launcher>);
     buildComponent(component: Class | object, name?: string): ApplicationBuilder;
-    buildCommands(commands: Class<ICommand>[]): void;
+    buildCommands(commands: Class<ICommand>[]): ApplicationBuilder;
     create(): Application;
     protected createContext(launcher: Class<Launcher>): ApplicationContext;
     protected createCommands(): ICommand[];

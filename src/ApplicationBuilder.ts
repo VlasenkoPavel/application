@@ -20,12 +20,14 @@ export class ApplicationBuilder {
         return this;
     }
 
-    public buildCommands(commands: Class<ICommand>[]) {
+    public buildCommands(commands: Class<ICommand>[]): ApplicationBuilder {
         this.commands = commands;
+
+        return this;
     }
 
     public create(): Application {
-        const app = new Application(this as any);
+        const app = new Application(this.context as any);
         app.setContext(this.context);
 
         if (!isEmpty(this.commands)) {
