@@ -7,5 +7,5 @@ export declare abstract class Launcher extends Component {
     protected context: ApplicationContext;
     constructor({ context }: LauncherDependencies);
     abstract start(): void | Promise<void>;
-    protected onExit(): void;
+    stop(): Promise<void>;
 }

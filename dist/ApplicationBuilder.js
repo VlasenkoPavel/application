@@ -11,7 +11,7 @@ class ApplicationBuilder {
         return this;
     }
     create() {
-        return new Application_1.Application(this.context);
+        return new Application_1.Application(this);
     }
     createContext(launcher) {
         return new ApplicationContext_1.ApplicationContext(launcher);

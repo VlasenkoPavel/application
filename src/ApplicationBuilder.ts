@@ -18,7 +18,7 @@ export class ApplicationBuilder {
     }
 
     public create(): Application {
-        return new Application(this.context);
+        return new Application(this as any);
     }
 
     protected createContext(launcher: Class<Launcher>): ApplicationContext {

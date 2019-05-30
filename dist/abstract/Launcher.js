@@ -6,8 +6,8 @@ class Launcher extends Component_1.Component {
         super();
         this.context = context;
     }
-    onExit() {
-        this.context.dispose();
+    async stop() {
+        await this.context.dispose();
     }
 }
 exports.Launcher = Launcher;

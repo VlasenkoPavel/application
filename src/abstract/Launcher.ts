@@ -16,8 +16,8 @@ export abstract class Launcher extends Component {
 
     public abstract start(): void | Promise<void>;
 
-    protected onExit(): void {
-        this.context.dispose();
+    public async stop(): Promise<void> {
+        await this.context.dispose();
     }
 
 }
