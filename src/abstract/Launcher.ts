@@ -9,8 +9,7 @@ export abstract class Launcher extends Component {
 
     protected context: ApplicationContext;
 
-    constructor({ context }: LauncherDependencies) {
-        super();
+    public setContext(context: ApplicationContext) {
         this.context = context;
     }
 
