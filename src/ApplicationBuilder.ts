@@ -16,7 +16,10 @@ export class ApplicationBuilder {
     }
 
     public buildConfigs<T extends Object>(configClasses: Class[], factory: IFactory<T>): this {
-        this.context.add(factory, 'configFactory');
+        if (factory) {
+            this.context.add(factory, 'configFactory');
+        }
+
         this.configs = configClasses;
 
         return this;

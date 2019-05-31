@@ -8,7 +8,9 @@ class ApplicationBuilder {
         this.context = this.createContext(launcher);
     }
     buildConfigs(configClasses, factory) {
-        this.context.add(factory, 'configFactory');
+        if (factory) {
+            this.context.add(factory, 'configFactory');
+        }
         this.configs = configClasses;
         return this;
     }
