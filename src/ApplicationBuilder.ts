@@ -4,6 +4,7 @@ import { Launcher } from './abstract/Launcher';
 import { Class, RequiredComponents } from './types';
 import { ICommand, IFactory } from './interfaces';
 import { isEmpty, isString } from 'lodash';
+import { createContext } from './utils';
 
 export class ApplicationBuilder {
 
@@ -90,7 +91,7 @@ export class ApplicationBuilder {
     }
 
     protected createContext(launcher: Class<Launcher>): ApplicationContext {
-        return new ApplicationContext(launcher);
+        return createContext(ApplicationContext, launcher);
     }
 
     protected createCommands(): ICommand[] {

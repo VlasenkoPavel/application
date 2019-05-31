@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Application_1 = require("./Application");
 const ApplicationContext_1 = require("./ApplicationContext");
 const lodash_1 = require("lodash");
+const utils_1 = require("./utils");
 class ApplicationBuilder {
     constructor(launcher) {
         this.parameters = new Map();
@@ -57,7 +58,7 @@ class ApplicationBuilder {
         return names.map(name => this.parameters.get(name) || this.context[name]);
     }
     createContext(launcher) {
-        return new ApplicationContext_1.ApplicationContext(launcher);
+        return utils_1.createContext(ApplicationContext_1.ApplicationContext, launcher);
     }
     createCommands() {
         return this.commands.map(command => new command(this.context));
