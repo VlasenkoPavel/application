@@ -30,6 +30,13 @@ export class ApplicationBuilder {
         return this;
     }
 
+    public buildWithParams(componentClass: Class, argNames: string[], name?: string): this {
+        const args = this.getComponents(argNames);
+        this.context.add(new componentClass(...args));
+
+        return this;
+    }
+
     public async buildByAsyncFactory<T extends Object>(
         factory: IFactory<Promise<T>> | string,
         argNames: string[],
