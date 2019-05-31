@@ -41,7 +41,10 @@ class Context {
     }
     load(otherContext) {
         const identifiers = otherContext.getIdentifiers();
-        identifiers.forEach(name => this[name] = otherContext[name]);
+        identifiers.forEach(name => {
+            this.identifiers.add(name);
+            this[name] = otherContext[name];
+        });
         return this;
     }
     getIdentifiers() {

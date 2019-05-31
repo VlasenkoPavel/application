@@ -58,7 +58,11 @@ export class Context {
 
     public load<T>(otherContext: LoadedContext<T>): this & LoadedContext<T>  {
         const identifiers = otherContext.getIdentifiers();
-        identifiers.forEach(name => this[name] = otherContext[name]);
+
+        identifiers.forEach(name => {
+            this.identifiers.add(name);
+            this[name] = otherContext[name];
+        });
 
         return this;
     }
