@@ -2,7 +2,7 @@ import { Application } from './Application';
 import { ApplicationContext } from './ApplicationContext';
 import { Launcher } from './abstract/Launcher';
 import { Class, RequiredComponents } from './types';
-import { ICommand } from './interfaces';
+import { ICommand, IConfigFactory } from './interfaces';
 import { isEmpty } from 'lodash';
 
 export class ApplicationBuilder {
@@ -12,6 +12,15 @@ export class ApplicationBuilder {
 
     constructor(launcher: Class<Launcher>) {
         this.context = this.createContext(launcher);
+    }
+
+    public async buildConfigs<T extends Object>(factory: IConfigFactory<T>, configClasses: Class[]): Promise<this> {
+        for (const cfgClass of configClasses) {
+            const config = await factory.create(cfgClass);
+            this.context.add(config);
+        }
+
+        return this;
     }
 
     public buildComponent(component: Class | object, name?: string): ApplicationBuilder {

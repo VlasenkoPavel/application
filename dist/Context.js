@@ -19,6 +19,14 @@ class Context {
         this.identifiers.add(name);
         return this;
     }
+    addConstruct(componentClass, argNames, name) {
+        const args = argNames.map(name => this[name]);
+        return this.add(new componentClass(...args), name);
+    }
+    setAlias(componentName, alias) {
+        this.identifiers.add(alias);
+        this[alias] = this[componentName];
+    }
     with(obj) {
         const extendedCtx = Object.create(this);
         Object.assign(extendedCtx, obj);

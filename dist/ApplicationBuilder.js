@@ -7,6 +7,13 @@ class ApplicationBuilder {
     constructor(launcher) {
         this.context = this.createContext(launcher);
     }
+    async buildConfigs(factory, configClasses) {
+        for (const cfgClass of configClasses) {
+            const config = await factory.create(cfgClass);
+            this.context.add(config);
+        }
+        return this;
+    }
     buildComponent(component, name) {
         this.context.add(component, name);
         return this;

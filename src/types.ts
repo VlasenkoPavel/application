@@ -5,6 +5,8 @@ export interface Class<T = any, P = any> extends Function {
     new (...args: P[]): T;
 }
 
+export type Optional<T> = T | undefined;
+
 export type StringKey<T> =  keyof T & string;
 
 export type Dependency = Function | object;

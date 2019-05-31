@@ -25,6 +25,21 @@ export class Context {
         return this as this & P;
     }
 
+    public addConstruct<T extends Object, P extends Object>(
+        componentClass: Class<T>,
+        argNames: string[],
+        name?: StringKey<P>
+    ): this & P {
+        const args = argNames.map(name => this[name]);
+
+        return this.add(new componentClass(...args), name);
+    }
+
+    public setAlias(componentName: string, alias: string) {
+        this.identifiers.add(alias);
+        this[alias] = this[componentName];
+    }
+
     public with<T extends Object>(obj: T): this & T {
         const extendedCtx = Object.create(this);
         Object.assign(extendedCtx, obj);
