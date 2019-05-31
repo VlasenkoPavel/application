@@ -9,18 +9,20 @@ export class ApplicationBuilder {
 
     protected context: ApplicationContext;
     protected commands: Class<ICommand>[];
-    protected configs: Class[];
+    protected parameters: Map<string, any> = new Map();
 
     constructor(launcher: Class<Launcher>) {
         this.context = this.createContext(launcher);
     }
 
-    public buildConfigs<T extends Object>(configClasses: Class[], factory: IFactory<T>): this {
-        if (factory) {
-            this.context.add(factory, 'configFactory');
+    public async buildConfigs<T extends Object>(
+        configClasses: Class[],
+        factory: IFactory<T> = this.context['configFactory']
+    ): Promise<this> {
+        for (const cfgClass of configClasses) {
+            const config = await factory.create(cfgClass);
+            this.context.add(config);
         }
-
-        this.configs = configClasses;
 
         return this;
     }
@@ -63,6 +65,12 @@ export class ApplicationBuilder {
         return this;
     }
 
+    public setParameter(name: string, value: any) {
+        this.parameters.set(name, value);
+
+        return this;
+    }
+
     public create(): Application {
         if (!isEmpty(this.commands)) {
             this.context.add(this.createCommands(), RequiredComponents.commands);
@@ -73,23 +81,12 @@ export class ApplicationBuilder {
         return app;
     }
 
-    protected async createConfigs(): Promise<this> {
-        if (this.configs) {
-            for (const cfgClass of this.configs) {
-                const config = await this.context['configFactory'].create(cfgClass);
-                this.context.add(config);
-            }
-        }
-
-        return this;
-    }
-
     protected getFactory<T>(factory: IFactory<T> | string): IFactory<T> {
         return isString(factory) ? this.context[factory] as IFactory<T> : factory;
     }
 
     protected getComponents(names: string[]): any[] {
-        return names.map(name => this.context[name]);
+        return names.map(name => this.parameters.get(name) || this.context[name]);
     }
 
     protected createContext(launcher: Class<Launcher>): ApplicationContext {

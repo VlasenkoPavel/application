@@ -5,13 +5,14 @@ const ApplicationContext_1 = require("./ApplicationContext");
 const lodash_1 = require("lodash");
 class ApplicationBuilder {
     constructor(launcher) {
+        this.parameters = new Map();
         this.context = this.createContext(launcher);
     }
-    buildConfigs(configClasses, factory) {
-        if (factory) {
-            this.context.add(factory, 'configFactory');
+    async buildConfigs(configClasses, factory = this.context['configFactory']) {
+        for (const cfgClass of configClasses) {
+            const config = await factory.create(cfgClass);
+            this.context.add(config);
         }
-        this.configs = configClasses;
         return this;
     }
     buildByFactory(factory, argNames, name) {
@@ -38,6 +39,10 @@ class ApplicationBuilder {
         this.commands = commands;
         return this;
     }
+    setParameter(name, value) {
+        this.parameters.set(name, value);
+        return this;
+    }
     create() {
         if (!lodash_1.isEmpty(this.commands)) {
             this.context.add(this.createCommands(), "commands" /* commands */);
@@ -45,20 +50,11 @@ class ApplicationBuilder {
         const app = new Application_1.Application(this.context);
         return app;
     }
-    async createConfigs() {
-        if (this.configs) {
-            for (const cfgClass of this.configs) {
-                const config = await this.context['configFactory'].create(cfgClass);
-                this.context.add(config);
-            }
-        }
-        return this;
-    }
     getFactory(factory) {
         return lodash_1.isString(factory) ? this.context[factory] : factory;
     }
     getComponents(names) {
-        return names.map(name => this.context[name]);
+        return names.map(name => this.parameters.get(name) || this.context[name]);
     }
     createContext(launcher) {
         return new ApplicationContext_1.ApplicationContext(launcher);
