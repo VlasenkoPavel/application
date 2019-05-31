@@ -19,6 +19,11 @@ class ApplicationBuilder {
         this.context.add(this.getFactory(factory).create(...args), name);
         return this;
     }
+    buildWithParams(componentClass, argNames, name) {
+        const args = this.getComponents(argNames);
+        this.context.add(new componentClass(...args));
+        return this;
+    }
     async buildByAsyncFactory(factory, argNames, name) {
         const args = this.getComponents(argNames);
         const component = await this.getFactory(factory).create(...args);

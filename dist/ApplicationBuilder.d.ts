@@ -9,6 +9,7 @@ export declare class ApplicationBuilder {
     constructor(launcher: Class<Launcher>);
     buildConfigs<T extends Object>(factory: IFactory<T>, configClasses: Class[]): Promise<this>;
     buildByFactory<T extends Object>(factory: IFactory<T> | string, argNames: string[], name?: string): this;
+    buildWithParams(componentClass: Class, argNames: string[], name?: string): this;
     buildByAsyncFactory<T extends Object>(factory: IFactory<Promise<T>> | string, argNames: string[], name?: string): Promise<this>;
     buildComponent(component: Class | object, name?: string): ApplicationBuilder;
     buildCommands(commands: Class<ICommand>[]): ApplicationBuilder;
