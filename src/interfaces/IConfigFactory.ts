@@ -1,3 +1,3 @@
-export interface IConfigFactory<T = any> {
-    create(...args: any[]): T | Promise<T>;
+export interface IFactory<T = any, P = any> {
+    create(...args: P[]): T;
 }

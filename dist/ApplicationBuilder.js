@@ -14,6 +14,17 @@ class ApplicationBuilder {
         }
         return this;
     }
+    buildByFactory(factory, argNames, name) {
+        const args = this.getComponents(argNames);
+        this.context.add(this.getFactory(factory).create(...args), name);
+        return this;
+    }
+    async buildByAsyncFactory(factory, argNames, name) {
+        const args = this.getComponents(argNames);
+        const component = await this.getFactory(factory).create(...args);
+        this.context.add(component, name);
+        return this;
+    }
     buildComponent(component, name) {
         this.context.add(component, name);
         return this;
@@ -28,6 +39,12 @@ class ApplicationBuilder {
         }
         const app = new Application_1.Application(this.context);
         return app;
+    }
+    getFactory(factory) {
+        return lodash_1.isString(factory) ? this.context[factory] : factory;
+    }
+    getComponents(names) {
+        return names.map(name => this.context[name]);
     }
     createContext(launcher) {
         return new ApplicationContext_1.ApplicationContext(launcher);

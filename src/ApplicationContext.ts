@@ -29,4 +29,5 @@ export class ApplicationContext<T extends Dependency = Dependency> extends Conte
     protected isComponent(arg: Element<T>): arg is Component {
         return arg instanceof Component;
     }
+
 }
