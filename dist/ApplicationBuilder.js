@@ -7,11 +7,9 @@ class ApplicationBuilder {
     constructor(launcher) {
         this.context = this.createContext(launcher);
     }
-    async buildConfigs(factory, configClasses) {
-        for (const cfgClass of configClasses) {
-            const config = await factory.create(cfgClass);
-            this.context.add(config);
-        }
+    buildConfigs(configClasses, factory) {
+        this.context.add(factory, 'configFactory');
+        this.configs = configClasses;
         return this;
     }
     buildByFactory(factory, argNames, name) {
@@ -44,6 +42,15 @@ class ApplicationBuilder {
         }
         const app = new Application_1.Application(this.context);
         return app;
+    }
+    async createConfigs() {
+        if (this.configs) {
+            for (const cfgClass of this.configs) {
+                const config = await this.context['configFactory'].create(cfgClass);
+                this.context.add(config);
+            }
+        }
+        return this;
     }
     getFactory(factory) {
         return lodash_1.isString(factory) ? this.context[factory] : factory;

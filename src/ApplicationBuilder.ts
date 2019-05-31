@@ -9,16 +9,15 @@ export class ApplicationBuilder {
 
     protected context: ApplicationContext;
     protected commands: Class<ICommand>[];
+    protected configs: Class[];
 
     constructor(launcher: Class<Launcher>) {
         this.context = this.createContext(launcher);
     }
 
-    public async buildConfigs<T extends Object>(factory: IFactory<T>, configClasses: Class[]): Promise<this> {
-        for (const cfgClass of configClasses) {
-            const config = await factory.create(cfgClass);
-            this.context.add(config);
-        }
+    public buildConfigs<T extends Object>(configClasses: Class[], factory: IFactory<T>): this {
+        this.context.add(factory, 'configFactory');
+        this.configs = configClasses;
 
         return this;
     }
@@ -69,6 +68,17 @@ export class ApplicationBuilder {
         const app = new Application(this.context as any);
 
         return app;
+    }
+
+    protected async createConfigs(): Promise<this> {
+        if (this.configs) {
+            for (const cfgClass of this.configs) {
+                const config = await this.context['configFactory'].create(cfgClass);
+                this.context.add(config);
+            }
+        }
+
+        return this;
     }
 
     protected getFactory<T>(factory: IFactory<T> | string): IFactory<T> {
