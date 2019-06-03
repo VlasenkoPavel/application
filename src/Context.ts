@@ -1,4 +1,4 @@
-import { Class, StringKey, LoadedContext, CreationOption, Keys } from './types';
+import { Class, StringKey, LoadedContext, CreationOption, Keys, Extension } from './types';
 import { getComponentName } from './utils/getComponentName';
 import { IFactory } from './interfaces';
 import { isFunction, isString } from 'lodash';
@@ -12,35 +12,37 @@ export class Context {
         return this;
     }
 
-    public add<P extends Object, T extends Object>(component: Class<T>, alias: StringKey<P>): this & P {
-        return this.addClass(component, { alias });
+    public add<T extends Object, P extends Object>(component: Class<T>, alias: StringKey<P>): this & Extension<T, P> {
+        this.addClass(component, { alias });
+
+        return this as this & Extension<T, P>;
     }
 
-    public addComponent<P extends Object>(
-        component: P,
+    public addComponent<T extends Object, P extends Object>(
+        component: T,
         alias: StringKey<P> = getComponentName(component) as StringKey<P>
-    ): this & P {
+    ): this & Extension<T, P> {
         return this.addValue(component, alias);
     }
 
-    public addClass<P extends Object, T extends Object>(
+    public addClass<T extends Object, P extends Extension<T, P>>(
         component: Class<T>,
         { alias = getComponentName(component) as StringKey<P>, args }: CreationOption<P, this> = {}
-    ): this & P {
+    ):  this & Extension<T, P> {
         const getter = this.createClassGetter(component, alias, this.getArguments(args));
         this.defineProperty(getter, alias);
 
-        return this as this & P;
+        return this as  this & Extension<T, P>;
     }
 
-    public addValue<P extends Object>(
+    public addValue<T, P extends Object>(
         component: any,
         alias: StringKey<P>
-    ): this & P {
+    ): this & Extension<T, P> {
         const getter = this.createValueGetter(component, alias);
         this.defineProperty(getter, alias);
 
-        return this as this & P;
+        return this as this & Extension<T, P>;
     }
 
     public addFactory<P extends Object>(

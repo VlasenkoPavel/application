@@ -28,3 +28,5 @@ export interface CreationOption<T extends Object, C extends Object = any> {
 }
 
 export type Keys<T> = (keyof T)[];
+
+export type Extension<T, P> = { [key in keyof P]: T };

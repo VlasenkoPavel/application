@@ -11,7 +11,8 @@ class Context {
         return this;
     }
     add(component, alias) {
-        return this.addClass(component, { alias });
+        this.addClass(component, { alias });
+        return this;
     }
     addComponent(component, alias = getComponentName_1.getComponentName(component)) {
         return this.addValue(component, alias);

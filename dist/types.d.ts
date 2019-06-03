@@ -20,3 +20,6 @@ export interface CreationOption<T extends Object, C extends Object = any> {
     args?: (keyof C)[];
 }
 export declare type Keys<T> = (keyof T)[];
+export declare type Extension<T, P> = {
+    [key in keyof P]: T;
+};

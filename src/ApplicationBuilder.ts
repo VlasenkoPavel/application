@@ -1,7 +1,7 @@
 import { Application } from './Application';
 import { ApplicationContext } from './ApplicationContext';
 import { Launcher } from './abstract/Launcher';
-import { Class, RequiredComponents, FactoryFunc, CreationOption, StringKey } from './types';
+import { Class, RequiredComponents, FactoryFunc, CreationOption, StringKey, Extension } from './types';
 import { ICommand, IFactory } from './interfaces';
 import { isEmpty, isString, isFunction } from 'lodash';
 import { createContext } from './utils';
@@ -33,7 +33,7 @@ export class ApplicationBuilder {
         return this;
     }
 
-    public buildComponent<T>(componentClass: Class<T>, option: CreationOption<T> = {}): this {
+    public buildComponent<T>(componentClass: Class<T>, option: CreationOption<Extension<T, any>> = {}): this {
         this.context.addClass(componentClass, option);
 
         return this;
