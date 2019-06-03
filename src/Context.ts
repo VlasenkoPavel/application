@@ -12,37 +12,40 @@ export class Context {
         return this;
     }
 
-    public add<T extends Object, P extends Object>(component: Class<T>, alias: StringKey<P>): this & Extension<T, P> {
+    public add<T extends Object, P extends Object>(
+        component: Class<T>,
+        alias: StringKey<P>
+    ): this & { [key in keyof P]: T } {
         this.addClass(component, { alias });
 
-        return this as this & Extension<T, P>;
+        return this as this & { [key in keyof P]: T };
     }
 
     public addComponent<T extends Object, P extends Object>(
         component: T,
         alias: StringKey<P> = getComponentName(component) as StringKey<P>
-    ): this & Extension<T, P> {
+    ): this & { [key in keyof P]: T } {
         return this.addValue(component, alias);
     }
 
-    public addClass<T extends Object, P extends Extension<T, P>>(
+    public addClass<T extends Object, P extends Object>(
         component: Class<T>,
         { alias = getComponentName(component) as StringKey<P>, args }: CreationOption<P, this> = {}
-    ):  this & Extension<T, P> {
+    ):  this & { [key in keyof P]: T } {
         const getter = this.createClassGetter(component, alias, this.getArguments(args));
         this.defineProperty(getter, alias);
 
-        return this as  this & Extension<T, P>;
+        return this as  this & { [key in keyof P]: T };
     }
 
     public addValue<T, P extends Object>(
         component: any,
         alias: StringKey<P>
-    ): this & Extension<T, P> {
+    ): this & { [key in keyof P]: T } {
         const getter = this.createValueGetter(component, alias);
         this.defineProperty(getter, alias);
 
-        return this as this & Extension<T, P>;
+        return this as this & { [key in keyof P]: T };
     }
 
     public addFactory<P extends Object>(
