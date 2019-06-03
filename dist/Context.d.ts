@@ -1,15 +1,26 @@
-import { Class, StringKey, LoadedContext } from './types';
+import { Class, StringKey, LoadedContext, CreationOption } from './types';
+import { IFactory } from './interfaces';
 export declare class Context {
     protected identifiers: Set<string>;
     protected cache: Map<string, any>;
     readonly context: this;
-    add<P extends Object, T extends Object>(component: Class<T> | T, name?: StringKey<P>): this & P;
-    addConstruct<T extends Object, P extends Object>(componentClass: Class<T>, argNames: string[], name?: StringKey<P>): this & P;
+    add<P extends Object, T extends Object>(component: Class<T>, alias: StringKey<P>): this & P;
+    addComponent<P extends Object>(component: P, alias?: StringKey<P>): this & P;
+    addClass<P extends Object, T extends Object>(component: Class<T>, { alias, args }?: CreationOption<P>): this & P;
+    addValue<P extends Object>(component: any, alias: StringKey<P>): this & P;
+    addFactory<P extends Object>(factory: IFactory | Function | string, alias: string, args?: string[]): this & P;
     setAlias(componentName: string, alias: string): void;
     with<T extends Object>(obj: T): this & T;
     loadToCache<T>(otherContext: Context): void;
     clearCache(): void;
     load<T>(otherContext: LoadedContext<T>): this & LoadedContext<T>;
+    protected getArguments(aliases?: string[]): any[];
     protected getIdentifiers(): string[];
-    protected createGetter<T>(component: Class<T> | T, name: string): () => T;
+    protected createClassGetter(component: Class, alias: string, args: any[]): () => any;
+    protected createFactoryGetter(factory: IFactory | Function, alias: string, args: any[]): () => any;
+    protected createValueGetter(component: Object, alias: string): () => any;
+    protected createGetter(alias: string, callbac: Function): () => any;
+    protected getFactory(factory: IFactory | Function | string): IFactory | Function;
+    protected createBy(factory: IFactory | Function, args: any[]): any;
+    protected defineProperty(getter: () => any, alias: string): void;
 }

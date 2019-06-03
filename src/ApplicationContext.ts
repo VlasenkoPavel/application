@@ -1,3 +1,5 @@
+import { isFunction } from 'lodash';
+
 import { Dependency, Element, Class, RequiredComponents } from './types';
 import { Context } from './Context';
 import { Launcher } from './abstract/Launcher';
@@ -7,7 +9,8 @@ export class ApplicationContext<T extends Dependency = Dependency> extends Conte
 
     constructor(launcher: Class<Launcher> | Launcher) {
         super();
-        this.add(launcher, RequiredComponents.launcher);
+        const alias = RequiredComponents.launcher;
+        isFunction(launcher) ? this.add(launcher as Class<Launcher>, alias) : this.addValue(launcher, alias);
     }
 
     public async init(): Promise<void> {

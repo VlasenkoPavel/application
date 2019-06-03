@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const isClass_1 = require("./utils/isClass");
 const getComponentName_1 = require("./utils/getComponentName");
+const lodash_1 = require("lodash");
 class Context {
     constructor() {
         this.identifiers = new Set();
@@ -10,18 +10,26 @@ class Context {
     get context() {
         return this;
     }
-    add(component, name = getComponentName_1.getComponentName(component)) {
-        Object.defineProperty(this, name, {
-            get: this.createGetter(component, name),
-            enumerable: true,
-            configurable: true
-        });
-        this.identifiers.add(name);
+    add(component, alias) {
+        return this.addClass(component, { alias });
+    }
+    addComponent(component, alias = getComponentName_1.getComponentName(component)) {
+        return this.addValue(component, alias);
+    }
+    addClass(component, { alias = getComponentName_1.getComponentName(component), args } = {}) {
+        const getter = this.createClassGetter(component, alias, this.getArguments(args));
+        this.defineProperty(getter, alias);
         return this;
     }
-    addConstruct(componentClass, argNames, name) {
-        const args = argNames.map(name => this[name]);
-        return this.add(new componentClass(...args), name);
+    addValue(component, alias) {
+        const getter = this.createValueGetter(component, alias);
+        this.defineProperty(getter, alias);
+        return this;
+    }
+    addFactory(factory, alias, args) {
+        const getter = this.createFactoryGetter(this.getFactory(factory), alias, this.getArguments(args));
+        this.defineProperty(getter, alias);
+        return this;
     }
     setAlias(componentName, alias) {
         this.identifiers.add(alias);
@@ -34,31 +42,57 @@ class Context {
     }
     loadToCache(otherContext) {
         const identifiers = otherContext.getIdentifiers();
-        identifiers.forEach(name => this.cache.set(name, otherContext[name]));
+        identifiers.forEach(id => this.cache.set(id, otherContext[id]));
     }
     clearCache() {
         this.cache = new Map();
     }
     load(otherContext) {
         const identifiers = otherContext.getIdentifiers();
-        identifiers.forEach(name => {
-            this.identifiers.add(name);
-            this[name] = otherContext[name];
+        identifiers.forEach(id => {
+            this.identifiers.add(id);
+            this[id] = otherContext[id];
         });
         return this;
+    }
+    getArguments(aliases) {
+        return aliases ? aliases.map(alias => this[alias]) : [this];
     }
     getIdentifiers() {
         return [...this.identifiers];
     }
-    createGetter(component, name) {
+    createClassGetter(component, alias, args) {
+        return this.createGetter(alias, () => new component(...args));
+    }
+    createFactoryGetter(factory, alias, args) {
+        return this.createGetter(alias, () => this.createBy(factory, args));
+    }
+    createValueGetter(component, alias) {
+        return this.createGetter(alias, () => component);
+    }
+    createGetter(alias, callbac) {
         return () => {
-            let instance = this.cache.get(name);
+            let instance = this.cache.get(alias);
             if (!instance) {
-                instance = isClass_1.isClass(component) ? new component(this) : component;
-                this.cache.set(name, instance);
+                instance = callbac();
+                this.cache.set(alias, instance);
             }
             return instance;
         };
+    }
+    getFactory(factory) {
+        return lodash_1.isString(factory) ? this[factory] : factory;
+    }
+    createBy(factory, args) {
+        return lodash_1.isFunction(factory) ? factory(...args) : factory.create(...args);
+    }
+    defineProperty(getter, alias) {
+        Object.defineProperty(this, alias, {
+            get: getter,
+            enumerable: true,
+            configurable: true
+        });
+        this.identifiers.add(alias);
     }
 }
 exports.Context = Context;

@@ -6,34 +6,31 @@ const lodash_1 = require("lodash");
 const utils_1 = require("./utils");
 class ApplicationBuilder {
     constructor(launcher) {
-        this.parameters = new Map();
         this.context = this.createContext(launcher);
     }
     async buildConfigs(configClasses, factory = this.context['configFactory']) {
         for (const cfgClass of configClasses) {
             const config = await factory.create(cfgClass);
-            this.context.add(config);
+            this.context.addComponent(config);
         }
         return this;
     }
-    buildByFactory(factory, argNames, name) {
-        const args = this.getComponents(argNames);
-        this.context.add(this.getFactory(factory).create(...args), name);
+    addFactory(factory, alias, args) {
+        this.context.addFactory(factory, alias, args);
         return this;
     }
-    buildWithParams(componentClass, argNames, name) {
-        const args = this.getComponents(argNames);
-        this.context.add(new componentClass(...args));
+    buildComponent(componentClass, option = {}) {
+        this.context.addClass(componentClass, option);
         return this;
     }
-    async buildByAsyncFactory(factory, argNames, name) {
+    async addAsyncFactory(factory, argNames, alias) {
         const args = this.getComponents(argNames);
-        const component = await this.getFactory(factory).create(...args);
-        this.context.add(component, name);
+        const component = lodash_1.isFunction(factory) ? await factory(...args) : await this.getFactory(factory).create(...args);
+        this.context.addValue(component, alias);
         return this;
     }
-    buildComponent(component, name) {
-        this.context.add(component, name);
+    addComponent(component, name) {
+        this.context.addComponent(component, name);
         return this;
     }
     buildCommands(commands) {
@@ -41,12 +38,12 @@ class ApplicationBuilder {
         return this;
     }
     setParameter(name, value) {
-        this.parameters.set(name, value);
+        this.context.addValue(value, name);
         return this;
     }
     create() {
         if (!lodash_1.isEmpty(this.commands)) {
-            this.context.add(this.createCommands(), "commands" /* commands */);
+            this.context.addValue(this.createCommands(), "commands" /* commands */);
         }
         const app = new Application_1.Application(this.context);
         return app;
@@ -55,7 +52,7 @@ class ApplicationBuilder {
         return lodash_1.isString(factory) ? this.context[factory] : factory;
     }
     getComponents(names) {
-        return names.map(name => this.parameters.get(name) || this.context[name]);
+        return names.map(name => this.context[name]);
     }
     createContext(launcher) {
         return utils_1.createContext(ApplicationContext_1.ApplicationContext, launcher);

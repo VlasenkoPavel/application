@@ -14,3 +14,8 @@ export declare const enum RequiredComponents {
     launcher = "launcher",
     commands = "commands"
 }
+export declare type FactoryFunc<T> = (...args: any[]) => T;
+export interface CreationOption<T extends Object> {
+    alias?: StringKey<T>;
+    args?: string[];
+}
