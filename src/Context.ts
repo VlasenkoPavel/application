@@ -1,4 +1,4 @@
-import { Class, StringKey, LoadedContext, CreationOption } from './types';
+import { Class, StringKey, LoadedContext, CreationOption, Keys } from './types';
 import { getComponentName } from './utils/getComponentName';
 import { IFactory } from './interfaces';
 import { isFunction, isString } from 'lodash';
@@ -25,7 +25,7 @@ export class Context {
 
     public addClass<P extends Object, T extends Object>(
         component: Class<T>,
-        { alias = getComponentName(component) as StringKey<P>, args }: CreationOption<P> = {}
+        { alias = getComponentName(component) as StringKey<P>, args }: CreationOption<P, this> = {}
     ): this & P {
         const getter = this.createClassGetter(component, alias, this.getArguments(args));
         this.defineProperty(getter, alias);
@@ -46,7 +46,7 @@ export class Context {
     public addFactory<P extends Object>(
         factory: IFactory | Function | string,
         alias: string,
-        args?: string[]
+        args?: Keys<this>
     ): this & P {
         const getter = this.createFactoryGetter(this.getFactory(factory), alias, this.getArguments(args));
         this.defineProperty(getter, alias);
@@ -86,7 +86,7 @@ export class Context {
         return this;
     }
 
-    protected getArguments(aliases?: string[]) {
+    protected getArguments(aliases?: Keys<this>) {
         return aliases ? aliases.map(alias => this[alias]) : [this];
     }
 

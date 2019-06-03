@@ -15,7 +15,8 @@ export declare const enum RequiredComponents {
     commands = "commands"
 }
 export declare type FactoryFunc<T> = (...args: any[]) => T;
-export interface CreationOption<T extends Object> {
+export interface CreationOption<T extends Object, C extends Object = any> {
     alias?: StringKey<T>;
-    args?: string[];
+    args?: (keyof C)[];
 }
+export declare type Keys<T> = (keyof T)[];

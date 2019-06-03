@@ -21,14 +21,14 @@ export class ApplicationBuilder {
     ): Promise<this> {
         for (const cfgClass of configClasses) {
             const config = await factory.create(cfgClass);
-            this.context.addComponent(config);
+            this.context = this.context.addComponent(config);
         }
 
         return this;
     }
 
     public addFactory<T>(factory: IFactory<T> | FactoryFunc<T> | string, alias: string, args?: string[]): this {
-        this.context.addFactory(factory, alias, args);
+        this.context = this.context.addFactory(factory, alias, args as any);
 
         return this;
     }

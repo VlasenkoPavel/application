@@ -11,12 +11,12 @@ class ApplicationBuilder {
     async buildConfigs(configClasses, factory = this.context['configFactory']) {
         for (const cfgClass of configClasses) {
             const config = await factory.create(cfgClass);
-            this.context.addComponent(config);
+            this.context = this.context.addComponent(config);
         }
         return this;
     }
     addFactory(factory, alias, args) {
-        this.context.addFactory(factory, alias, args);
+        this.context = this.context.addFactory(factory, alias, args);
         return this;
     }
     buildComponent(componentClass, option = {}) {
