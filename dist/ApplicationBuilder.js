@@ -29,16 +29,16 @@ class ApplicationBuilder {
         this.context.addValue(component, alias);
         return this;
     }
-    addComponent(component, name) {
-        this.context.addComponent(component, name);
+    addComponent(component, alias) {
+        this.context.addComponent(component, alias);
         return this;
     }
     buildCommands(commands) {
         this.commands = commands;
         return this;
     }
-    setParameter(name, value) {
-        this.context.addValue(value, name);
+    setParameter(alias, value) {
+        this.context.addValue(value, alias);
         return this;
     }
     create() {

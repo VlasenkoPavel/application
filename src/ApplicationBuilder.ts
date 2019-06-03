@@ -51,8 +51,8 @@ export class ApplicationBuilder {
         return this;
     }
 
-    public addComponent<T extends Object>(component: T, name?: string): ApplicationBuilder {
-        this.context.addComponent(component, name as StringKey<T>);
+    public addComponent<T extends Object>(component: T, alias?: string): ApplicationBuilder {
+        this.context.addComponent(component, alias as StringKey<T>);
 
         return this;
     }
@@ -63,8 +63,8 @@ export class ApplicationBuilder {
         return this;
     }
 
-    public setParameter(name: string, value: any) {
-        this.context.addValue(value, name);
+    public setParameter(alias: string, value: any) {
+        this.context.addValue(value, alias);
 
         return this;
     }

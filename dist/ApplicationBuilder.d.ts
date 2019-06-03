@@ -11,9 +11,9 @@ export declare class ApplicationBuilder {
     addFactory<T>(factory: IFactory<T> | FactoryFunc<T> | string, alias: string, args?: string[]): this;
     buildComponent<T>(componentClass: Class<T>, option?: CreationOption<T>): this;
     addAsyncFactory<T extends Object>(factory: IFactory<Promise<T>> | FactoryFunc<Promise<T>> | string, argNames: string[], alias?: string): Promise<this>;
-    addComponent<T extends Object>(component: T, name?: string): ApplicationBuilder;
+    addComponent<T extends Object>(component: T, alias?: string): ApplicationBuilder;
     buildCommands(commands: Class<ICommand>[]): ApplicationBuilder;
-    setParameter(name: string, value: any): this;
+    setParameter(alias: string, value: any): this;
     create(): Application;
     protected getFactory<T>(factory: IFactory<T> | string): IFactory<T>;
     protected getComponents(names: string[]): any[];
