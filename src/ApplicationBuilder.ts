@@ -5,6 +5,7 @@ import { Class, RequiredComponents, FactoryFunc, CreationOption, StringKey, Exte
 import { ICommand, IFactory } from './interfaces';
 import { isEmpty, isString, isFunction } from 'lodash';
 import { createContext } from './utils';
+import { Component } from './abstract';
 
 export class ApplicationBuilder {
 
@@ -44,7 +45,7 @@ export class ApplicationBuilder {
         argNames: string[],
         alias?: string
     ): Promise<this> {
-        const args = this.getComponents(argNames);
+        const args = this.getInstances(argNames);
         const component = isFunction(factory) ? await factory(...args) : await this.getFactory(factory).create(...args);
         this.context.addValue(component, alias);
 
@@ -79,12 +80,12 @@ export class ApplicationBuilder {
         return app;
     }
 
-    protected getFactory<T>(factory: IFactory<T> | string): IFactory<T> {
-        return isString(factory) ? this.context[factory] as IFactory<T> : factory;
+    protected getInstances(names: string[]): Component[] {
+        return names.map(name => this.context[name]);
     }
 
-    protected getComponents(names: string[]): any[] {
-        return names.map(name => this.context[name]);
+    protected getFactory<T>(factory: IFactory<T> | string): IFactory<T> {
+        return isString(factory) ? this.context[factory] as IFactory<T> : factory;
     }
 
     protected createContext(launcher: Class<Launcher>): ApplicationContext {

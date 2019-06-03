@@ -1,13 +1,12 @@
-import { ApplicationContext } from './ApplicationContext';
-import { Launcher } from './abstract';
+import { Launcher, Component } from './abstract';
 interface Dependencies {
-    context: ApplicationContext;
+    components: Map<string, Component>;
     launcher: Launcher;
 }
 export declare class Application {
-    protected context: ApplicationContext;
+    protected components: Map<string, Component>;
     protected launcher: Launcher;
-    constructor({ context, launcher }: Dependencies);
+    constructor({ components, launcher }: Dependencies);
     init(): Promise<void>;
     start(): Promise<void>;
     stop(): Promise<void>;

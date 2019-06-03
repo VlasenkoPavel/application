@@ -24,7 +24,7 @@ class ApplicationBuilder {
         return this;
     }
     async addAsyncFactory(factory, argNames, alias) {
-        const args = this.getComponents(argNames);
+        const args = this.getInstances(argNames);
         const component = lodash_1.isFunction(factory) ? await factory(...args) : await this.getFactory(factory).create(...args);
         this.context.addValue(component, alias);
         return this;
@@ -48,11 +48,11 @@ class ApplicationBuilder {
         const app = new Application_1.Application(this.context);
         return app;
     }
+    getInstances(names) {
+        return names.map(name => this.context[name]);
+    }
     getFactory(factory) {
         return lodash_1.isString(factory) ? this.context[factory] : factory;
-    }
-    getComponents(names) {
-        return names.map(name => this.context[name]);
     }
     createContext(launcher) {
         return utils_1.createContext(ApplicationContext_1.ApplicationContext, launcher);

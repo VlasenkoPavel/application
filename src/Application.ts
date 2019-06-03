@@ -1,23 +1,24 @@
 import { ApplicationContext } from './ApplicationContext';
-import { Launcher } from './abstract';
+import { Launcher, Component } from './abstract';
 
 interface Dependencies {
-    context: ApplicationContext;
+    components: Map<string, Component>;
     launcher: Launcher;
 }
 
 export class Application {
-
-    protected context: ApplicationContext;
+    protected components: Map<string, Component>;
     protected launcher: Launcher;
 
-    constructor({ context, launcher }: Dependencies) {
+    constructor({ components, launcher }: Dependencies) {
         this.launcher = launcher;
-        this.context = context;
+        this.components = components;
     }
 
     public async init(): Promise<void> {
-        await this.context.init();
+        await Promise.all(
+            [...this.components.values()].map(component => component.init())
+        );
     }
 
     public async start(): Promise<void> {
@@ -25,7 +26,8 @@ export class Application {
     }
 
     public async stop(): Promise<void> {
-        await this.context.dispose();
+        await Promise.all(
+            [...this.components.values()].map(component => component.dispose())
+        );
     }
-
 }

@@ -4,6 +4,7 @@ import { Dependency, Element, Class, RequiredComponents } from './types';
 import { Context } from './Context';
 import { Launcher } from './abstract/Launcher';
 import { Component } from './abstract/Component';
+import { isComponent } from './utils';
 
 export class ApplicationContext<T extends Dependency = Dependency> extends Context {
 
@@ -13,24 +14,19 @@ export class ApplicationContext<T extends Dependency = Dependency> extends Conte
         isFunction(launcher) ? this.add(launcher as Class<Launcher>, alias) : this.addValue(launcher, alias);
     }
 
-    public async init(): Promise<void> {
-        await Promise.all(
-            this.getComponents().map(component => component.init())
-        );
-    }
+    get components () {
+        const components: Map<string, Component> = new Map();
 
-    public async dispose(): Promise<void> {
-        await Promise.all(
-            this.getComponents().map(component => component.dispose())
-        );
-    }
+        this.getIdentifiers()
+            .forEach(id => {
+                const instance = this[id];
 
-    protected getComponents(): any[] {
-        return this.getIdentifiers().map(item => (this[item])).filter(component => this.isComponent(component));
-    }
+                if (isComponent(instance)) {
+                    components.set(id, instance);
+                }
+            });
 
-    protected isComponent(arg: Element<T>): arg is Component {
-        return arg instanceof Component;
+        return components;
     }
 
 }

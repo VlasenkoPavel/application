@@ -3,6 +3,7 @@ import { ApplicationContext } from './ApplicationContext';
 import { Launcher } from './abstract/Launcher';
 import { Class, FactoryFunc, CreationOption, Extension } from './types';
 import { ICommand, IFactory } from './interfaces';
+import { Component } from './abstract';
 export declare class ApplicationBuilder {
     protected context: ApplicationContext;
     protected commands: Class<ICommand>[];
@@ -15,8 +16,8 @@ export declare class ApplicationBuilder {
     buildCommands(commands: Class<ICommand>[]): ApplicationBuilder;
     setParameter(alias: string, value: any): this;
     create(): Application;
+    protected getInstances(names: string[]): Component[];
     protected getFactory<T>(factory: IFactory<T> | string): IFactory<T>;
-    protected getComponents(names: string[]): any[];
     protected createContext(launcher: Class<Launcher>): ApplicationContext;
     protected createCommands(): ICommand[];
 }
